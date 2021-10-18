@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+    android:id="@+id/action_home"
+    android:enabled="true"
+    android:icon="@drawable/ic_home"
+    android:title="Home" />
+
+  <item
+    android:id="@+id/action_news"
+    android:enabled="true"
+    android:icon="@drawable/ic_noties"
+    android:title="News" />
+
+
+  <item
+      android:id="@+id/action_notifications"
+      android:enabled="true"
+      android:icon="@drawable/ic_notifications"
+      android:title="Notification"
+      />
+
+  <item
+      android:id="@+id/action_more"
+      android:enabled="true"
+      android:icon="@drawable/ic_read_more"
+      android:title="More"
+      />
+
+</menu>
