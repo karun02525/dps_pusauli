@@ -10,25 +10,27 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_student_profile.*
 import org.dpspusauli.R
-import org.dpspusauli.student.model.ProfileData
+import org.dpspusauli.student.model.StudentModel
+import org.dpspusauli.student.model.TeacherModel
 import org.dpspusauli.student.mvvm.ProfileViewModel
 import org.dpspusauli.student.ui.profile.fragments.ParentInfoFragment
 import org.dpspusauli.student.ui.profile.fragments.StudentInfoFragment
 import org.dpspusauli.student.ui.profile.fragments.TeacherInfoFragment
+import org.dpspusauli.utils.log
 import org.dpspusauli.utils.toast
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class StudentProfileActivity : AppCompatActivity() {
     private val viewModel: ProfileViewModel by viewModel()
-
+    var student: StudentModel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_profile)
 
         setupViewModel()
         hideShowProgress(true)
-        val student_id=intent.extras?.getString("student_id")?:""
-        viewModel.getProfileDetails(student_id)
+        val studentId=intent.extras?.getString("student_id")?:""
+        viewModel.getProfileDetails(studentId)
 
         btn_back.setOnClickListener {
             onBackPressed()
@@ -36,10 +38,17 @@ class StudentProfileActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel.data.observe(this, Observer {
-            initViewPage(it)
-            hideShowProgress(false)
+        viewModel.studentData.observe(this, Observer {
+            log("Students Data $it")
+            viewModel.getTeacher(it.classes.id)
+            student=it
         })
+
+        viewModel.teacherData.observe(this, Observer {
+            hideShowProgress(false)
+            initViewPage(it)
+        })
+
         viewModel.errorMsg.observe(this, Observer {
             hideShowProgress(false)
             cardTab.visibility=View.INVISIBLE
@@ -49,7 +58,7 @@ class StudentProfileActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun initViewPage(data: ProfileData) {
+    private fun initViewPage(teacher: TeacherModel) {
         cardTab.visibility=View.VISIBLE
         tabViewPager.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount(): Int {
@@ -58,14 +67,15 @@ class StudentProfileActivity : AppCompatActivity() {
 
             override fun createFragment(position: Int): Fragment {
                 return when (position) {
-                    0 -> StudentInfoFragment.instance(data.student,data.class_info)
-                    1 -> ParentInfoFragment.instance(data.student)
-                    2 -> TeacherInfoFragment.instance(data.teacher)
-                    else -> StudentInfoFragment.instance(data.student, data.class_info)
+                    0 -> StudentInfoFragment(student)
+                    1 -> ParentInfoFragment(student)
+                    2 -> TeacherInfoFragment(teacher)
+                    else -> StudentInfoFragment(student)
                 }
             }
         }
-        tabViewPager.currentItem = 0
+   //     tabViewPager.currentItem = 0
+ //       tabViewPager.offscreenPageLimit = 3
         TabLayoutMediator(tabLayout, tabViewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> "Students Info"

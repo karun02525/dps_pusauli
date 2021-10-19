@@ -8,31 +8,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.adapter_profile_details.view.*
+import kotlinx.android.synthetic.main.fragment_student_info.*
 import kotlinx.android.synthetic.main.fragment_teacher_info.*
 import org.dpspusauli.R
+import org.dpspusauli.network.Const
 import org.dpspusauli.student.model.ProfileTeacher
+import org.dpspusauli.student.model.TeacherModel
 
-class TeacherInfoFragment : Fragment() {
-    private var teacher: ProfileTeacher? = null
+class TeacherInfoFragment(val teacher: TeacherModel?) : Fragment() {
+    val list: ArrayList<TeacherInfoModel> = arrayListOf()
 
-    companion object {
-        @JvmStatic
-        fun instance(student: ProfileTeacher?) =
-            TeacherInfoFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable("teacher", student)
-                }
-            }
-    }
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            teacher = it.getParcelable("teacher")
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,20 +40,25 @@ class TeacherInfoFragment : Fragment() {
         } else {
             main_ui_hide.visibility = View.VISIBLE
             empty_data.visibility = View.GONE
+            teacher.run {
+                tv_teacher_name.text = "$fname $lname"
+                tv_tsname.text = parentName
 
-            tv_teacher_name.text = teacher?.fname + " " + teacher?.lname
-            tv_tsname.text = teacher?.surname ?: ""
-            Glide.with(this).load(teacher?.teacher_avatar ?: "")
-                .placeholder(R.drawable.ic_user)
-                .into(iv_teacher_pic)
+                Picasso.get()
+                    .load("${Const.BASE_URL}/${teacherAvatar}")
+                    .into(iv_teacher_pic, object : Callback {
+                        override fun onSuccess() {}
+                        override fun onError(e: Exception?) {
+                            iv_teacher_pic.setImageResource(R.drawable.profile_pic)
+                        }
+                    })
 
-
-            val list: ArrayList<TeacherInfoModel> = arrayListOf()
-            list.run {
-                add(TeacherInfoModel("Date of birth", teacher?.dob ?: ""))
-                add(TeacherInfoModel("Mobile number", teacher?.phone ?: ""))
-                add(TeacherInfoModel("Email ID ", teacher?.email ?: ""))
-                add(TeacherInfoModel("Qualification", teacher?.qualification ?: ""))
+                list.run {
+                    add(TeacherInfoModel("Date of birth", dob ?: ""))
+                    add(TeacherInfoModel("Mobile number", mobile ?: ""))
+                    add(TeacherInfoModel("Email ID ", email ?: ""))
+                    add(TeacherInfoModel("Qualification", qualification ?: ""))
+                }
             }
 
             val mAdapter = TeacherInfoAdapter(list)

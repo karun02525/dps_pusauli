@@ -7,38 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.adapter_profile_details.view.*
 import kotlinx.android.synthetic.main.fragment_student_info.*
 import org.dpspusauli.R
-import org.dpspusauli.student.model.ProfileClassInfo
-import org.dpspusauli.student.model.ProfileStudent
-import org.dpspusauli.student.model.StudentsInfoModel
+import org.dpspusauli.network.Const
+import org.dpspusauli.student.model.StudentModel
 
 
-class StudentInfoFragment : Fragment() {
-    private var student: ProfileStudent? = null
-    private var classInfo: ProfileClassInfo? = null
-
-    companion object {
-        @JvmStatic
-        fun instance(student: ProfileStudent?, classInfo: ProfileClassInfo?) =
-            StudentInfoFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable("Student", student)
-                    putParcelable("class_info", classInfo)
-                }
-            }
-    }
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            student = it.getParcelable("Student")
-            classInfo = it.getParcelable("class_info")
-        }
-    }
+class StudentInfoFragment(var student: StudentModel?) : Fragment() {
+   private val list: ArrayList<StudentsInfoModel> = arrayListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,37 +30,48 @@ class StudentInfoFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tv_stu_name.text= student?.fname +" "+ student?.lname
-        tv_sname.text= student?.surname?:""
-        Glide.with(this).load(student?.student_avatar?:"")
-            .placeholder(R.drawable.ic_user)
-            .into(iv_stu_pic)
 
-        val list: ArrayList<StudentsInfoModel> = arrayListOf()
-        list.run {
-            add(StudentsInfoModel("Roll No", classInfo?.roll_no?:"----"))
-            add(StudentsInfoModel("Class", classInfo?.class_name?:"----"))
-            add(StudentsInfoModel("SEC",  classInfo?.section?:"----"))
-            add(StudentsInfoModel("Gender",  student?.gender?:""))
-            add(StudentsInfoModel("Date of birth",  student?.dob?:""))
-            add(StudentsInfoModel("Mobile number",  student?.phone?:""))
-            add(StudentsInfoModel("email",  student?.email?:""))
-            add(StudentsInfoModel("address", student?.address?:""))
-            add(StudentsInfoModel("Post Office",  student?.postOffice?:""))
-            add(StudentsInfoModel("Police Station",  student?.policeStation?:""))
-            add(StudentsInfoModel("Dist",  student?.dist?:""))
-            add(StudentsInfoModel("State", student?.state?:""))
-            add(StudentsInfoModel("Country", student?.country?:""))
+        student?.run {
+            Picasso.get()
+                .load("${Const.BASE_URL}/${studentAvatar}")
+                .into(iv_stu_pic, object : Callback {
+                    override fun onSuccess() {}
+                    override fun onError(e: Exception?) {
+                        iv_stu_pic.setImageResource(R.drawable.profile_pic)
+                    }
+                })
+
+            tv_stu_name.text = "$fname $lname"
+            val rollMess: String = if (rollno == 0) {
+                "Pending"
+            }else{
+                ""+rollno
+            }
+            tv_sname.text = "Class: ${classes.name ?: "---"},Roll No: $rollMess"
+
+            list.run {
+                add(StudentsInfoModel("Roll No", rollno.toString()))
+                add(StudentsInfoModel("Class", classes.name ?: "----"))
+                add(StudentsInfoModel("Gender", gender ?: ""))
+                add(StudentsInfoModel("Date of birth", dob ?: ""))
+                add(StudentsInfoModel("Mobile number", mobile ?: ""))
+                add(StudentsInfoModel("email", email ?: ""))
+                add(StudentsInfoModel("address", address ?: ""))
+                add(StudentsInfoModel("Post Office", postOffice ?: ""))
+                add(StudentsInfoModel("Dist", distc ?: ""))
+                add(StudentsInfoModel("State", state ?: ""))
+            }
         }
 
         val mAdapter = StudentsInfoAdapter(list)
         rv_StuInfo.adapter = mAdapter
+
     }
 
 
 }
 
-
+data class StudentsInfoModel(val key: String, val value: String)
 class StudentsInfoAdapter(var list: List<StudentsInfoModel> = listOf()) :
     RecyclerView.Adapter<StudentsInfoAdapter.ViewHolder>() {
 

@@ -10,12 +10,15 @@ import org.dpspusauli.R
 import org.dpspusauli.network.ApiStatus
 import org.dpspusauli.network.RestClient
 import org.dpspusauli.student.model.ProfileData
+import org.dpspusauli.student.model.StudentModel
+import org.dpspusauli.student.model.TeacherModel
 
 class ProfileViewModel(private val restClient: RestClient) : ViewModel() {
 
      val errorMsg = MutableLiveData<String>()
      val success = MutableLiveData<String>()
-     val data = MutableLiveData<ProfileData>()
+     val studentData = MutableLiveData<StudentModel>()
+     val teacherData = MutableLiveData<TeacherModel>()
 
 
 
@@ -24,7 +27,22 @@ class ProfileViewModel(private val restClient: RestClient) : ViewModel() {
             try {
                 restClient.webServices().getProfileDetailsAsync(student_id).await().let {
                     if (it.isSuccessful)
-                        data.value = it.body()!!.data!!
+                        studentData.value = it.body()!!.data
+                     else
+                        errorMsg.value = ApiStatus.isCheckAPIStatus(it.code(), it.errorBody())
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                errorMsg.value = App.appContext?.getString(R.string.no_internet_available)
+            }
+        }
+    }
+    fun getTeacher(class_id: String) {
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                restClient.webServices().getTeacherAsync(class_id).await().let {
+                    if (it.isSuccessful)
+                        teacherData.value = it.body()!!.teacher
                      else
                         errorMsg.value = ApiStatus.isCheckAPIStatus(it.code(), it.errorBody())
                 }

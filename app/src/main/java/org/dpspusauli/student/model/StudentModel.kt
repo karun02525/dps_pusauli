@@ -1,7 +1,6 @@
 package org.dpspusauli.student.model
 import com.google.gson.annotations.SerializedName
 
-
 data class StudentModel(
     @SerializedName("classes")
     var classes: ClassesModel,
@@ -59,12 +58,12 @@ data class StudentModel(
     var postOffice: String,
     @SerializedName("qualification")
     var qualification: String,
-    @SerializedName("roll_status")
-    var rollStatus: Boolean,
     @SerializedName("rollno")
     var rollno: Int=0,
     @SerializedName("state")
-    var state: String,
+    var state: String?,
+    @SerializedName("address")
+    var address: String?,
     @SerializedName("student_avatar")
     var studentAvatar: String,
     @SerializedName("student_doc_back")
