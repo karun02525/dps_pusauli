@@ -4,12 +4,20 @@ import com.google.gson.annotations.SerializedName
 
 data class AttendanceModel(
     @SerializedName("data")
-    var `data`: AttendanceData?,
+    var `data`: List<AttendanceData>,
     @SerializedName("message")
-    var message: String?,
+    var message: String,
     @SerializedName("status")
-    var status: String?
+    var status: Boolean
 )
+
+data class AttendanceData(
+    @SerializedName("createdAt")
+    var createdAt: String,
+    @SerializedName("type")
+    var type: String
+)
+/*
 
 data class AttendanceData(
     @SerializedName("analytics")
@@ -42,4 +50,4 @@ data class Attlist(
     var attenDate: String?,
     @SerializedName("student_id")
     var studentId: String?
-)
+)*/

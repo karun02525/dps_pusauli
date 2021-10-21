@@ -15,7 +15,7 @@ import org.dpspusauli.student.model.ProfileData
 class AttendanceViewModel(private val restClient: RestClient) : ViewModel() {
 
      val errorMsg = MutableLiveData<String>()
-     val data = MutableLiveData<AttendanceData>()
+     val dataAttendance = MutableLiveData<List<AttendanceData>>()
 
 
     fun getAttendance(student_id: String) {
@@ -23,7 +23,7 @@ class AttendanceViewModel(private val restClient: RestClient) : ViewModel() {
             try {
                 restClient.webServices().getAttendanceAsync(student_id).await().let {
                     if (it.isSuccessful)
-                        data.value = it.body()!!.data!!
+                        dataAttendance.value = it.body()!!.data
                      else
                         errorMsg.value = ApiStatus.isCheckAPIStatus(it.code(), it.errorBody())
                 }

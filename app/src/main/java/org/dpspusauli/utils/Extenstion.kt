@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.popwoot.carouselbanner.interfaces.CarouselImageFactory
 import org.dpspusauli.R
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -76,4 +77,15 @@ fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String 
 
 fun getCurrentDateTime(): Date {
     return Calendar.getInstance().time
+}
+
+fun String.convertMongoDate(): String {
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    val outputFormat = SimpleDateFormat("yyyy-MM-dd")
+    try {
+        return outputFormat.format(inputFormat.parse(this))
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
+    return "--/--/----"
 }

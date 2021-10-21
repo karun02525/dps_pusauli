@@ -4,6 +4,7 @@ package org.dpspusauli.di
 import org.dpspusauli.authenticaton.AuthViewModel
 import org.dpspusauli.network.RestClient
 import org.dpspusauli.network.RestClient.webServices
+import org.dpspusauli.student.mvvm.AttendanceViewModel
 import org.dpspusauli.student.mvvm.ParentDashboardViewModel
 import org.dpspusauli.student.mvvm.ProfileViewModel
 import org.koin.android.viewmodel.dsl.viewModel
@@ -24,6 +25,9 @@ val viewModelModule = module {
     }
     viewModel {
         ParentDashboardViewModel(get())
+    }
+    viewModel {
+        AttendanceViewModel(get())
     }
 
 }

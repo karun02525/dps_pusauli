@@ -5,9 +5,6 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.androidnetworking.AndroidNetworking
-import com.androidnetworking.error.ANError
-import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.OnRangeSelectedListener
@@ -15,20 +12,17 @@ import kotlinx.android.synthetic.main.parent_activity_calender_attendance.*
 import org.dpspusauli.R
 import org.dpspusauli.student.model.AttendanceData
 import org.dpspusauli.student.mvvm.AttendanceViewModel
+import org.dpspusauli.utils.convertMongoDate
 import org.dpspusauli.utils.toast
-import org.json.JSONException
-import org.json.JSONObject
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class AttendanceCalender : AppCompatActivity(), OnRangeSelectedListener {
     private val viewModel: AttendanceViewModel by viewModel()
-    internal var sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+    private var sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
     private var materialCalendarView: MaterialCalendarView? = null
-    private var list: MutableList<Model_Attendance>? = mutableListOf()
+    private var list: MutableList<ModelAttendance>? = mutableListOf()
     private var dateList: MutableList<String>? = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +32,8 @@ class AttendanceCalender : AppCompatActivity(), OnRangeSelectedListener {
         setupViewModel()
         hideShowProgress(true)
         val studentId=intent.extras?.getString("student_id")?:""
-        viewModel.getAttendance(studentId)
+     //   viewModel.getAttendance(studentId)
+        viewModel.getAttendance("61673e469d4a8bfd8b39e0da")
 
         materialCalendarView = findViewById<View>(R.id.calendarView) as MaterialCalendarView
         materialCalendarView!!.selectionMode = MaterialCalendarView.SELECTION_MODE_NONE
@@ -51,23 +46,23 @@ class AttendanceCalender : AppCompatActivity(), OnRangeSelectedListener {
     }
 
     private fun setupViewModel() {
-        viewModel.data.observe(this, Observer {
+        viewModel.dataAttendance.observe(this, Observer {
             hideShowProgress(false)
             dataParse(it)
         })
         viewModel.errorMsg.observe(this, Observer {
             hideShowProgress(false)
             toast(it)
-            onBackPressed()
+           // onBackPressed()
         })
     }
 
-    private fun dataParse(it: AttendanceData) {
+    private fun dataParse(it: List<AttendanceData>) {
         
-        for (i in  it.attlist!!) {
-            val dateString = i.attenDate
-            list!!.add(Model_Attendance(dateString,i.attType))
-            dateList!!.add(dateString!!)
+        for (i in  it) {
+            val dateString = i.createdAt.convertMongoDate()
+            list!!.add(ModelAttendance(dateString,i.type))
+            dateList!!.add(dateString)
             materialCalendarView!!.selectRange(CalendarDay.from(sdf.parse(dateString)), CalendarDay.from(sdf.parse(dateString)))
         }
     }
@@ -81,18 +76,23 @@ class AttendanceCalender : AppCompatActivity(), OnRangeSelectedListener {
             val indexOfDate = dateList!!.indexOf(sdf.format(dates[i].date))
             Log.d("DateIndex", indexOfDate.toString())
             if (indexOfDate >= 0) {
-                if (list!![indexOfDate].status == "1") {
-                    widget.setDateSelected(dates[i], false)
-                    widget.addDecorator(BookingDecorator(this, list!![indexOfDate].status, dates))
-                } else if (list!![indexOfDate].status == "3") {
-                    widget.setDateSelected(dates[i], false)
-                    widget.addDecorator(BookingDecorator(this, list!![indexOfDate].status, dates))
-                } else if (list!![indexOfDate].status == "4") {
-                    widget.setDateSelected(dates[i], false)
-                    widget.addDecorator(BookingDecorator(this, list!![indexOfDate].status, dates))
-                } else {
-                    widget.setDateSelected(dates[i], false)
-                    widget.addDecorator(BookingDecorator(this, list!![indexOfDate].status, dates))
+                when (list!![indexOfDate].status) {
+                    "Present" -> {
+                        widget.setDateSelected(dates[i], false)
+                        widget.addDecorator(BookingDecorator(this, list!![indexOfDate].status, dates))
+                    }
+                    "Apsent" -> {
+                        widget.setDateSelected(dates[i], false)
+                        widget.addDecorator(BookingDecorator(this, list!![indexOfDate].status, dates))
+                    }
+                    "4" -> {
+                        widget.setDateSelected(dates[i], false)
+                        widget.addDecorator(BookingDecorator(this, list!![indexOfDate].status, dates))
+                    }
+                    else -> {
+                        widget.setDateSelected(dates[i], false)
+                        widget.addDecorator(BookingDecorator(this, list!![indexOfDate].status, dates))
+                    }
                 }
             } else {
                 widget.setDateSelected(dates[i], false)
@@ -104,6 +104,7 @@ class AttendanceCalender : AppCompatActivity(), OnRangeSelectedListener {
         if (flag) progress_circular.visibility = View.VISIBLE else progress_circular.visibility = View.GONE
     }
 }
+data class ModelAttendance(val atten_date: String, var status: String)
 
 
 
