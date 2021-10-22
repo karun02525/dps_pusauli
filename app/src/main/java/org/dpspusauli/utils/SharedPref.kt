@@ -4,10 +4,10 @@ import android.content.Context
 import org.dpspusauli.App
 
 
-class ParentSharedPref private constructor() {
+class SharedPref private constructor() {
 
     companion object {
-        val instance = ParentSharedPref()
+        val instance = SharedPref()
         private const val preference_file_key = "org.dpspusauli_preference"
 
         private const val LANGUAGE = "language"
@@ -159,8 +159,8 @@ class ParentSharedPref private constructor() {
 
 
     fun logOutStudent() {
-        val lang = ParentSharedPref.instance.checkLanguage
+        val lang = SharedPref.instance.checkLanguage
         editor.clear().apply()
-        ParentSharedPref.instance.checkLanguage = lang!!
+        SharedPref.instance.checkLanguage = lang!!
     }
 }

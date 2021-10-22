@@ -33,7 +33,7 @@ class StudentInfoFragment(var student: StudentModel?) : Fragment() {
 
         student?.run {
             Picasso.get()
-                .load("${Const.BASE_URL}/${studentAvatar}")
+                .load("${Const.ImageBaseUrl}/${studentAvatar}")
                 .into(iv_stu_pic, object : Callback {
                     override fun onSuccess() {}
                     override fun onError(e: Exception?) {

@@ -27,11 +27,11 @@ import org.dpspusauli.student.ui.adapter.SelectUserAdapter
 import org.dpspusauli.student.ui.attendance.AttendanceCalender
 import org.dpspusauli.student.ui.profile.StudentProfileActivity
 import org.dpspusauli.utils.ImageFactory
-import org.dpspusauli.utils.ParentSharedPref
+import org.dpspusauli.utils.SharedPref
 
 
 class HomeFragment : Fragment() {
-    private val sp by lazy { ParentSharedPref.instance }
+    private val sp by lazy { SharedPref.instance }
     var list: ArrayList<MenuModel> = arrayListOf()
     private var listStudents = mutableListOf<StudentModel>()
     private var student_id = ""
@@ -131,7 +131,7 @@ class HomeFragment : Fragment() {
         model?.run {
             student_id = id
             Picasso.get()
-                .load("${Const.BASE_URL}/${studentAvatar}")
+                .load("${Const.ImageBaseUrl}/${studentAvatar}")
                 .into(profile_image, object : Callback {
                     override fun onSuccess() {}
                     override fun onError(e: Exception?) {

@@ -32,7 +32,7 @@ class ParentInfoFragment(val student: StudentModel?) : Fragment() {
 
         student?.run {
             Picasso.get()
-                .load("${Const.BASE_URL}/${parentAvatar}")
+                .load("${Const.ImageBaseUrl}/${parentAvatar}")
                 .into(iv_parent_pic, object : Callback {
                     override fun onSuccess() {}
                     override fun onError(e: Exception?) {

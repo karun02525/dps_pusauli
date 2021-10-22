@@ -14,21 +14,21 @@ import org.dpspusauli.R
 import org.dpspusauli.student.model.StudentModel
 import org.dpspusauli.student.mvvm.ParentDashboardViewModel
 import org.dpspusauli.student.ui.home.fragment.*
-import org.dpspusauli.utils.ParentSharedPref
+import org.dpspusauli.utils.SharedPref
 import org.dpspusauli.utils.log
 import org.dpspusauli.utils.toast
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class StudentDashboardActivity : AppCompatActivity() {
     private val viewModel: ParentDashboardViewModel by viewModel()
-    private val spParent by lazy { ParentSharedPref.instance }
+    private val spParent by lazy { SharedPref.instance }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
         setupViewModel()
 
         hideShowProgress(true)
-        viewModel.getStudentsWithParentId("67987")
+        viewModel.getStudentsWithParentId("123322")
 
     }
     private fun initLoadViewPager() {

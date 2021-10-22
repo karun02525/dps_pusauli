@@ -19,7 +19,7 @@ interface ApiService {
     @GET("/api/student-attendance")
     fun getAttendanceAsync(@Query("student_id") student_id: String): Deferred<Response<AttendanceModel>>
 
-    @GET("/api/student-parent")
+    @GET("/api/student-info")
     fun getStudentsWithParentIdAsync(@Query("parent_doc_id") parent_doc_id: String): Deferred<Response<ParentModel>>
 
     @GET("/api/student/{student_id}")

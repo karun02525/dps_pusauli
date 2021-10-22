@@ -75,13 +75,14 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
+                            android:id="@+id/tv_present"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:drawableStart="@drawable/ic_dot_green"
                             android:drawablePadding="10dp"
-                            android:text="Present  No of Days: 6"/>
+                            tools:text="Present  No of Days: 6"
+                            app:drawableStartCompat="@drawable/ic_dot_green" />
 
                     </LinearLayout>
 
@@ -90,13 +91,14 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
+                            android:id="@+id/tv_absent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:drawableStart="@drawable/ic_dot_red"
                             android:drawablePadding="10dp"
-                            android:text="Absent   No of Days: 2"/>
+                            tools:text="Absent   No of Days: 2"
+                            app:drawableStartCompat="@drawable/ic_dot_red" />
 
                     </LinearLayout>
 
@@ -105,13 +107,14 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
+                            android:id="@+id/tv_holiday"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:drawableStart="@drawable/ic_dot_blue"
                             android:drawablePadding="10dp"
-                            android:text="Holiday  No of Days: 16"/>
+                            tools:text="Holiday  No of Days: 16"
+                            app:drawableStartCompat="@drawable/ic_dot_violet_red" />
 
                     </LinearLayout>
 
@@ -120,13 +123,14 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
+                            android:id="@+id/tv_leave"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:drawableStart="@drawable/ic_dot_yellow"
                             android:drawablePadding="10dp"
-                            android:text="Leave    No of Days: 2"/>
+                            tools:text="Leave    No of Days: 2"
+                            app:drawableStartCompat="@drawable/ic_dot_blue" />
 
                     </LinearLayout>
 
@@ -143,11 +147,11 @@
                 app:mcv_showOtherDates="none"
                 app:mcv_selectionColor="#00F"/>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/colardar_bottom"/>
+                app:srcCompat="@drawable/colardar_bottom"/>
 
         </LinearLayout>
 

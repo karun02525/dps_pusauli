@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_dot_blue.xml" value="0.2745" />
+        <entry key="app/src/main/res/drawable/ic_dot_violet_red.xml" value="0.2745" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23229166666666667" />
         <entry key="app/src/main/res/layout/activity_student_profile.xml" value="0.4244791666666667" />
@@ -11,6 +13,7 @@
         <entry key="app/src/main/res/layout/fragment_parent_info.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/fragment_student_info.xml" value="0.4244791666666667" />
+        <entry key="app/src/main/res/layout/fragment_teacher_info.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/parent_activity_calender_attendance.xml" value="0.4244791666666667" />
       </map>
     </option>

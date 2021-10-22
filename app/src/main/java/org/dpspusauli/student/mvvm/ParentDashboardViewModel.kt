@@ -9,13 +9,11 @@ import org.dpspusauli.App
 import org.dpspusauli.R
 import org.dpspusauli.network.ApiStatus
 import org.dpspusauli.network.RestClient
-import org.dpspusauli.student.model.ParentDashboardData
 import org.dpspusauli.student.model.StudentModel
 
 class ParentDashboardViewModel(private val restClient: RestClient) : ViewModel() {
 
      val errorMsg = MutableLiveData<String>()
-     val dashboardData = MutableLiveData<ParentDashboardData>()
      val studentList = MutableLiveData<List<StudentModel>>()
 
 

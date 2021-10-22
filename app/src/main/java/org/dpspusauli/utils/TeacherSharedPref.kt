@@ -299,8 +299,8 @@ class TeacherSharedPref private constructor() {
 
 
     fun logOutTeacher() {
-        val lang = ParentSharedPref.instance.checkLanguage
+        val lang = SharedPref.instance.checkLanguage
         editor.clear().apply()
-        ParentSharedPref.instance.checkLanguage = lang!!
+        SharedPref.instance.checkLanguage = lang!!
     }
 }

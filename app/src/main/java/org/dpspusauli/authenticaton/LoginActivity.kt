@@ -16,7 +16,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class LoginActivity : AppCompatActivity() {
 
     private val viewModel: AuthViewModel by viewModel()
-    private val spParent by lazy { ParentSharedPref.instance }
+    private val spParent by lazy { SharedPref.instance }
     private val spTeacher by lazy { TeacherSharedPref.instance }
     private var loginType = "Parent"
 

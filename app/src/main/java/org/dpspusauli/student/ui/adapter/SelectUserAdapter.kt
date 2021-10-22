@@ -5,14 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.adapter_select_user.view.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import org.dpspusauli.R
 import org.dpspusauli.network.Const
-import org.dpspusauli.student.model.DashboardStudent
 import org.dpspusauli.student.model.StudentModel
 import org.dpspusauli.student.ui.home.fragment.HomeFragment.Companion.checkedPosition
 
@@ -48,7 +45,7 @@ class SelectUserAdapter(var list: MutableList<StudentModel> = mutableListOf(), v
 
             itemView.run {
                 Picasso.get()
-                    .load("${Const.BASE_URL}/${model.studentAvatar}")
+                    .load("${Const.ImageBaseUrl}/${model.studentAvatar}")
                     .into(ivProfileUser, object : Callback {
                         override fun onSuccess() {}
                         override fun onError(e: Exception?) {

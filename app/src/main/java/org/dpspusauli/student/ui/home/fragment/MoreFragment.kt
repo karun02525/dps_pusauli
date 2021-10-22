@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_more.*
 import org.dpspusauli.R
 import org.dpspusauli.authenticaton.LoginActivity
-import org.dpspusauli.utils.ParentSharedPref
+import org.dpspusauli.utils.SharedPref
 
 class MoreFragment : Fragment() {
 
@@ -30,7 +30,7 @@ class MoreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btnLogout.setOnClickListener {
-            ParentSharedPref.instance.logOutStudent()
+            SharedPref.instance.logOutStudent()
             val intent =Intent(requireContext(), LoginActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)

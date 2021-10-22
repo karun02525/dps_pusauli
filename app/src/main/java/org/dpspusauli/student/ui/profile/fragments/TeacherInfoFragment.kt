@@ -45,7 +45,7 @@ class TeacherInfoFragment(val teacher: TeacherModel?) : Fragment() {
                 tv_tsname.text = parentName
 
                 Picasso.get()
-                    .load("${Const.BASE_URL}/${teacherAvatar}")
+                    .load("${Const.ImageBaseUrl}/${teacherAvatar}")
                     .into(iv_teacher_pic, object : Callback {
                         override fun onSuccess() {}
                         override fun onError(e: Exception?) {

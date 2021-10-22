@@ -23,6 +23,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class StudentProfileActivity : AppCompatActivity() {
     private val viewModel: ProfileViewModel by viewModel()
     var student: StudentModel? = null
+    var teacher: TeacherModel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_profile)
@@ -42,23 +43,22 @@ class StudentProfileActivity : AppCompatActivity() {
             log("Students Data $it")
             viewModel.getTeacher(it.classes.id)
             student=it
+            initViewPage()
         })
 
         viewModel.teacherData.observe(this, Observer {
             hideShowProgress(false)
-            initViewPage(it)
+            teacher=it
         })
 
         viewModel.errorMsg.observe(this, Observer {
             hideShowProgress(false)
-            cardTab.visibility=View.INVISIBLE
             toast(it)
-            onBackPressed()
         })
     }
 
     @SuppressLint("SetTextI18n")
-    private fun initViewPage(teacher: TeacherModel) {
+    private fun initViewPage() {
         cardTab.visibility=View.VISIBLE
         tabViewPager.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount(): Int {

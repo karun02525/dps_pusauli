@@ -3,12 +3,12 @@ package org.dpspusauli
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import org.dpspusauli.student.ui.home.StudentDashboardActivity
-import org.dpspusauli.utils.ParentSharedPref
+import org.dpspusauli.utils.SharedPref
 import org.dpspusauli.utils.TeacherSharedPref
 import org.dpspusauli.utils.startNewActivityFinish
 
 class SplashActivity : AppCompatActivity() {
-    private val spParent by lazy { ParentSharedPref.instance }
+    private val spParent by lazy { SharedPref.instance }
     private val spTeacher by lazy { TeacherSharedPref.instance }
 
     override fun onCreate(savedInstanceState: Bundle?) {
