@@ -5,9 +5,12 @@ import android.view.View
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_login.*
 import org.dpspusauli.R
-import org.dpspusauli.student.model.ParentData
+import org.dpspusauli.student.model.Parent
+import org.dpspusauli.student.model.Student
+import org.dpspusauli.student.model.Token
 import org.dpspusauli.student.ui.home.StudentDashboardActivity
 import org.dpspusauli.utils.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -36,21 +39,20 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkValidation() {
-        val username = edit_username.text.toString()
-       // val pass = edit_password.text.toString()
-        val pass = username
+        val email = email.text.toString()
+        val password = password.text.toString()
 
         when {
-            username.isBlank() -> {
-                mess("Please enter username")
+            email.isBlank() -> {
+                mess("Please enter email id")
             }
-           /* pass.isBlank() -> {
+            password.isBlank() -> {
                 mess("Please enter password")
-            }*/
+            }
             else -> {
                 hideShowProgress(true)
                 if (loginType == "Parent") {
-                    viewModel.loginByParent(username, pass)
+                    viewModel.loginByParent(email, password)
                 }
 
             }
@@ -58,10 +60,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel.loginStudentData.observe(this, Observer {
+        viewModel.dataLiveData.observe(this, Observer {
             log("TAGS => Parent Login Data:   $it")
             hideShowProgress(false)
-            successfullyParentLogin(it)
+            loginSuccess(it)
         })
 
 
@@ -69,18 +71,30 @@ class LoginActivity : AppCompatActivity() {
         viewModel.errorMsg.observe(this, Observer {
             log("TAGS => Parent/Teacher Login Error :   $it")
             hideShowProgress(false)
-            toast(it)
+            if (it != null) {
+                toast(it)
+            }
         })
     }
 
-    private fun successfullyParentLogin(it: ParentData?) {
-        it.let {
+    private fun loginSuccess(triple: Triple< List<Parent>?,List<Student>?, Token?>) {
+        val parentData = triple.first
+        val listStudent =  triple.second
+        val token = triple.third
+
+       // it.let {
             spParent.run {
                 isLoginStatus = 1
-                parentId = it?.parentId
-                authToken = it?.token
+
+               // parentId = it?.parentId
+                authToken = token?.access
+
+         //   }
+
+                if(!listStudent.isNullOrEmpty()) {
+                    spParent.studentArray = Gson().toJson(listStudent)
+                }
                 startNewActivityFinish(StudentDashboardActivity::class.java)
-            }
         }
     }
 

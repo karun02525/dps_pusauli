@@ -80,7 +80,7 @@ fun getCurrentDateTime(): Date {
 }
 
 fun String.convertMongoDate(): String {
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd")
     val outputFormat = SimpleDateFormat("yyyy-MM-dd")
     try {
         return outputFormat.format(inputFormat.parse(this))

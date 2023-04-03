@@ -10,15 +10,16 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.adapter_select_user.view.*
 import org.dpspusauli.R
 import org.dpspusauli.network.Const
+import org.dpspusauli.student.model.Student
 import org.dpspusauli.student.model.StudentModel
 import org.dpspusauli.student.ui.home.fragment.HomeFragment.Companion.checkedPosition
 
 
-class SelectUserAdapter(var list: MutableList<StudentModel> = mutableListOf(), var listener: ItemClickListener) :
+class SelectUserAdapter(var list: MutableList<Student> = mutableListOf(), var listener: ItemClickListener) :
     RecyclerView.Adapter<SelectUserAdapter.ViewHolder>() {
 
     interface ItemClickListener {
-        fun onItemClicked(repos: StudentModel)
+        fun onItemClicked(repos: Student)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,11 +42,11 @@ class SelectUserAdapter(var list: MutableList<StudentModel> = mutableListOf(), v
         val mCnt = itemView.context
 
         @SuppressLint("SetTextI18n")
-        fun bindItems(model: StudentModel) {
+        fun bindItems(model: Student) {
 
             itemView.run {
                 Picasso.get()
-                    .load("${Const.ImageBaseUrl}/${model.studentAvatar}")
+                    .load("${Const.ImageBaseUrl}/${model.studentPic}")
                     .into(ivProfileUser, object : Callback {
                         override fun onSuccess() {}
                         override fun onError(e: Exception?) {
@@ -53,14 +54,14 @@ class SelectUserAdapter(var list: MutableList<StudentModel> = mutableListOf(), v
                         }
                     })
 
-                val rollMess: String = if (model.rollno == 0) {
+                val rollMess: String = if (model.rollNo == 0) {
                     "Pending"
                 }else{
-                    ""+model.rollno
+                    ""+model.rollNo
                 }
 
-                tvUserContactName.text = model.fname + " " + model.lname
-                tvNumber.text = "Class:  ${model.classes.name?:"---"},Roll No: $rollMess"
+                tvUserContactName.text = model.firstName + " " + model.lastName
+                tvNumber.text = "Class:  ${model.classes.className?:"---"},Roll No: $rollMess"
             }
 
             if (checkedPosition == -1) {

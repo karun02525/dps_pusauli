@@ -34,16 +34,16 @@ class BookingDecorator implements DayViewDecorator {
     //   view.addSpan(new ForegroundColorSpan(mColor));
        //view.addSpan(new BackgroundColorSpan(Color.BLUE));
        switch (status) {
-           case "Present":
+           case "present":
                view.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.ic_dot_green));
                break;
-           case "Absent":
+           case "absent":
                view.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.ic_dot_red));
                break;
-           case "Leave":
+           case "leave":
                view.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.ic_dot_blue));
                break;
-           case "Holiday":
+           case "holiday":
                view.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.ic_dot_violet_red));
                break;
            default:

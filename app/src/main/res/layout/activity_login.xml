@@ -31,15 +31,16 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:hint="Enter username"
+        android:hint="Enter email id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv"
         app:placeholderText="Enter username">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_username"
-            android:inputType="textCapCharacters"
+            android:id="@+id/email"
+            android:text="ram@gmail.com"
+            android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -61,8 +62,10 @@
         app:placeholderText="Enter password">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
             android:inputType="textPassword"
             android:layout_width="match_parent"
+            android:text="1234"
             android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -85,7 +88,7 @@
             android:layout_height="wrap_content"
             android:text="Parent"/>
         <RadioButton
-
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Teacher"/>

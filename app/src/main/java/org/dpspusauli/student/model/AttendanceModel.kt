@@ -12,8 +12,8 @@ data class AttendanceModel(
 )
 
 data class AttendanceData(
-    @SerializedName("createdAt")
+    @SerializedName("created_at")
     var createdAt: String,
-    @SerializedName("type")
-    var type: String
+    @SerializedName("status")
+    var status: String
 )

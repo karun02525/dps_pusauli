@@ -8,7 +8,7 @@ import retrofit2.http.*
 interface ApiService {
 
     // Authentication
-    @POST("/api/student/auth/login")
+    @POST("/api/login/")
     fun loginByParentAsync(@Body param: HashMap<String, String>): Deferred<Response<LoginParentModel>>
 
     /*@POST("/api/teacher/auth/login")
@@ -16,14 +16,14 @@ interface ApiService {
 */
 
 
-    @GET("/api/student-attendance")
-    fun getAttendanceAsync(@Query("student_id") student_id: String): Deferred<Response<AttendanceModel>>
+    @GET("/api/student-attendance/{student_id}")
+    fun getAttendanceAsync(@Path("student_id") student_id: String): Deferred<Response<AttendanceModel>>
 
     @GET("/api/student-info")
     fun getStudentsWithParentIdAsync(@Query("parent_doc_id") parent_doc_id: String): Deferred<Response<ParentModel>>
 
-    @GET("/api/student/{student_id}")
-    fun getProfileDetailsAsync(@Path("student_id") student_id: String): Deferred<Response<StudentDetailsModel>>
+    @GET("/api/students/{student_id}")
+    fun getProfileDetailsAsync(@Path("student_id") student_id: String): Deferred<Response<StudentDetailsResponse>>
 
     @GET("/api/teacher")
     fun getTeacherAsync(@Query("class_id") class_id: String): Deferred<Response<TeacherModelInfo>>

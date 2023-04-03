@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
-                android:text="Attendance"
+                android:text="Attendances"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -80,6 +80,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
+                            android:textColor="#4CAF50"
                             android:drawablePadding="10dp"
                             tools:text="Present  No of Days: 6"
                             app:drawableStartCompat="@drawable/ic_dot_green" />
@@ -96,6 +97,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
+                            android:textColor="#00BCD4"
                             android:drawablePadding="10dp"
                             tools:text="Absent   No of Days: 2"
                             app:drawableStartCompat="@drawable/ic_dot_red" />
@@ -112,6 +114,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
+                            android:textColor="#9236F4"
                             android:drawablePadding="10dp"
                             tools:text="Holiday  No of Days: 16"
                             app:drawableStartCompat="@drawable/ic_dot_violet_red" />
@@ -128,6 +131,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
+                            android:textColor="#F44336"
                             android:drawablePadding="10dp"
                             tools:text="Leave    No of Days: 2"
                             app:drawableStartCompat="@drawable/ic_dot_blue" />

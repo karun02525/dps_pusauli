@@ -10,6 +10,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_student_profile.*
 import org.dpspusauli.R
+import org.dpspusauli.student.model.Student
 import org.dpspusauli.student.model.StudentModel
 import org.dpspusauli.student.model.TeacherModel
 import org.dpspusauli.student.mvvm.ProfileViewModel
@@ -22,7 +23,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class StudentProfileActivity : AppCompatActivity() {
     private val viewModel: ProfileViewModel by viewModel()
-    var student: StudentModel? = null
+    var student: Student? = null
     var teacher: TeacherModel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +42,7 @@ class StudentProfileActivity : AppCompatActivity() {
     private fun setupViewModel() {
         viewModel.studentData.observe(this, Observer {
             log("Students Data $it")
-            viewModel.getTeacher(it.classes.id)
+            //viewModel.getTeacher(it.classes.id)
             student=it
             initViewPage()
         })

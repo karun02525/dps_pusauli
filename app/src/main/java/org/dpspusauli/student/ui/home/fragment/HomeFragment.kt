@@ -21,19 +21,20 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import org.dpspusauli.R
 import org.dpspusauli.network.Const
 import org.dpspusauli.student.model.MenuModel
-import org.dpspusauli.student.model.StudentModel
+import org.dpspusauli.student.model.Student
 import org.dpspusauli.student.ui.adapter.MenuAdapter
 import org.dpspusauli.student.ui.adapter.SelectUserAdapter
 import org.dpspusauli.student.ui.attendance.AttendanceCalender
 import org.dpspusauli.student.ui.profile.StudentProfileActivity
 import org.dpspusauli.utils.ImageFactory
 import org.dpspusauli.utils.SharedPref
+import java.lang.reflect.Type
 
 
 class HomeFragment : Fragment() {
     private val sp by lazy { SharedPref.instance }
     var list: ArrayList<MenuModel> = arrayListOf()
-    private var listStudents = mutableListOf<StudentModel>()
+    private var listStudents = mutableListOf<Student>()
     private var student_id = ""
 
     companion object {
@@ -46,10 +47,11 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("TAGS", "Student Data: " + sp.studentArray)
-        if(sp.studentArray !=null) {
-            val type = object : TypeToken<List<StudentModel?>?>() {}.type
-            if(type !=null)
-            listStudents = Gson().fromJson(sp.studentArray, type)
+        listStudents = try {
+            val type: Type = object : TypeToken<List<Student>>() {}.type
+            Gson().fromJson(sp.studentArray, type)
+        } catch (error: Throwable) {
+            emptyList<Student>().toMutableList()
         }
     }
 
@@ -86,7 +88,7 @@ class HomeFragment : Fragment() {
 
         val mAdapter = MenuAdapter(list, object : MenuAdapter.ItemClickListener {
             override fun onItemClicked(repos: MenuModel, pos: Int) {
-                openDetails(repos, pos)
+               openDetails(repos, pos)
             }
         })
         rv_menu.adapter = mAdapter
@@ -116,7 +118,7 @@ class HomeFragment : Fragment() {
         val mAdapter = SelectUserAdapter(
             listStudents,
             object : SelectUserAdapter.ItemClickListener {
-                override fun onItemClicked(repos: StudentModel) {
+                override fun onItemClicked(repos: Student) {
                     dig.dismiss()
                     selectUserCall(repos)
                 }
@@ -127,11 +129,11 @@ class HomeFragment : Fragment() {
 
 
     @SuppressLint("SetTextI18n")
-    fun selectUserCall(model: StudentModel?) {
+    fun selectUserCall(model: Student?) {
         model?.run {
-            student_id = id
+            student_id = model.studentId
             Picasso.get()
-                .load("${Const.ImageBaseUrl}/${studentAvatar}")
+                .load("${Const.ImageBaseUrl}/${studentPic}")
                 .into(profile_image, object : Callback {
                     override fun onSuccess() {}
                     override fun onError(e: Exception?) {
@@ -139,13 +141,13 @@ class HomeFragment : Fragment() {
                     }
                 })
 
-            tv_name.text = "$fname $lname"
-            val rollMess: String = if (rollno == 0) {
+            tv_name.text = "$firstName $lastName"
+            val rollMess: String = if (rollNo == 0) {
                 "Pending"
             }else{
-                ""+rollno
+                ""+rollNo
             }
-            tv_sec.text = "Class: ${classes.name ?: "---"},Roll No: $rollMess"
+            tv_sec.text = "Class: ${classes.className ?: "---"},Roll No: $rollMess"
         }
     }
 

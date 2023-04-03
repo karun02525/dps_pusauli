@@ -33,7 +33,7 @@ class AttendanceCalender : AppCompatActivity(), OnRangeSelectedListener {
         hideShowProgress(true)
         val studentId=intent.extras?.getString("student_id")?:""
      //   viewModel.getAttendance(studentId)
-        viewModel.getAttendance("6171ba9cf3f0f8a101e7047d")
+        viewModel.getAttendance("63655")
 
         materialCalendarView = findViewById<View>(R.id.calendarView) as MaterialCalendarView
         materialCalendarView!!.selectionMode = MaterialCalendarView.SELECTION_MODE_NONE
@@ -64,20 +64,20 @@ class AttendanceCalender : AppCompatActivity(), OnRangeSelectedListener {
         var holidayCount=0
 
         for (i in  it) {
-            if(i.type=="Present"){
+            if(i.status=="present"){
                 presentCount+=1
             }
-            if(i.type=="Absent"){
+            if(i.status=="absent"){
                 absentCount+=1
             }
-            if(i.type=="Leave"){
+            if(i.status=="leave"){
                 leaveCount+=1
             }
-            if(i.type=="Holiday"){
+            if(i.status=="holiday"){
                 holidayCount+=1
             }
             val dateString = i.createdAt.convertMongoDate()
-            list!!.add(ModelAttendance(dateString,i.type))
+            list!!.add(ModelAttendance(dateString,i.status))
             dateList!!.add(dateString)
             materialCalendarView!!.selectRange(CalendarDay.from(sdf.parse(dateString)), CalendarDay.from(sdf.parse(dateString)))
         }
@@ -97,19 +97,19 @@ class AttendanceCalender : AppCompatActivity(), OnRangeSelectedListener {
             Log.d("DateIndex", indexOfDate.toString())
             if (indexOfDate >= 0) {
                 when (list!![indexOfDate].status) {
-                    "Present" -> {
+                    "present" -> {
                         widget.setDateSelected(dates[i], false)
                         widget.addDecorator(BookingDecorator(this, list!![indexOfDate].status, dates))
                     }
-                    "Absent" -> {
+                    "absent" -> {
                         widget.setDateSelected(dates[i], false)
                         widget.addDecorator(BookingDecorator(this, list!![indexOfDate].status, dates))
                     }
-                    "Leave" -> {
+                    "leave" -> {
                         widget.setDateSelected(dates[i], false)
                         widget.addDecorator(BookingDecorator(this, list!![indexOfDate].status, dates))
                     }
-                    "Holiday" -> {
+                    "holiday" -> {
                         widget.setDateSelected(dates[i], false)
                         widget.addDecorator(BookingDecorator(this, list!![indexOfDate].status, dates))
                     }

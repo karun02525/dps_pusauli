@@ -16,7 +16,10 @@
         android:theme="@style/Theme.DPSPUSAULI"
         android:requiredForAllUsers="true"
         android:usesCleartextTraffic="true">
+
         <activity android:name=".student.ui.profile.StudentProfileActivity" />
+
+
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +27,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity android:name=".student.ui.attendance.AttendanceCalender" />
         <activity android:name=".student.ui.home.StudentDashboardActivity" />
         <activity android:name=".authenticaton.LoginActivity" />

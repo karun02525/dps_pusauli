@@ -25,11 +25,11 @@ class StudentDashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
-        setupViewModel()
+       // setupViewModel()
 
-        hideShowProgress(true)
-        viewModel.getStudentsWithParentId("123322")
-
+       // hideShowProgress(true)
+      //  viewModel.getStudentsWithParentId("123322")
+        initLoadViewPager()
     }
     private fun initLoadViewPager() {
         with(main_viewpager) {
@@ -123,9 +123,6 @@ class StudentDashboardActivity : AppCompatActivity() {
     }
 
     private fun updateSharePref(it: List<StudentModel>) {
-        if(!it.isNullOrEmpty()) {
-            spParent.studentArray = Gson().toJson(it)
-        }
         initLoadViewPager()
     }
 

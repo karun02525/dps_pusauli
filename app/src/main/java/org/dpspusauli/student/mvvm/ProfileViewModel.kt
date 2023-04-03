@@ -9,7 +9,7 @@ import org.dpspusauli.App
 import org.dpspusauli.R
 import org.dpspusauli.network.ApiStatus
 import org.dpspusauli.network.RestClient
-import org.dpspusauli.student.model.ProfileData
+import org.dpspusauli.student.model.Student
 import org.dpspusauli.student.model.StudentModel
 import org.dpspusauli.student.model.TeacherModel
 
@@ -17,7 +17,7 @@ class ProfileViewModel(private val restClient: RestClient) : ViewModel() {
 
      val errorMsg = MutableLiveData<String>()
      val success = MutableLiveData<String>()
-     val studentData = MutableLiveData<StudentModel>()
+     val studentData = MutableLiveData<Student>()
      val teacherData = MutableLiveData<TeacherModel>()
 
 

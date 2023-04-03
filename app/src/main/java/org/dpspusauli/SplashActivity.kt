@@ -1,7 +1,9 @@
 package org.dpspusauli
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import org.dpspusauli.authenticaton.LoginActivity
 import org.dpspusauli.student.ui.home.StudentDashboardActivity
 import org.dpspusauli.utils.SharedPref
 import org.dpspusauli.utils.TeacherSharedPref
@@ -14,19 +16,17 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        startNewActivityFinish(StudentDashboardActivity::class.java)
 
-
- /*       Handler().postDelayed({
-            when {
-                spParent.isLoginStatus == 1 -> {
+        Handler().postDelayed({
+            when (spParent.isLoginStatus) {
+                1 -> {
                     startNewActivityFinish(StudentDashboardActivity::class.java)
                 }
                 else -> {
                     startNewActivityFinish(LoginActivity::class.java)
                 }
             }
-        }, 500)*/
+        }, 500)
 
 
     }

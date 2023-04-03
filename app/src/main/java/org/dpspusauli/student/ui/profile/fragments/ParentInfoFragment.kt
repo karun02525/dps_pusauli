@@ -14,9 +14,10 @@ import kotlinx.android.synthetic.main.adapter_profile_details.view.*
 import kotlinx.android.synthetic.main.fragment_parent_info.*
 import org.dpspusauli.R
 import org.dpspusauli.network.Const
+import org.dpspusauli.student.model.Student
 import org.dpspusauli.student.model.StudentModel
 
-class ParentInfoFragment(val student: StudentModel?) : Fragment() {
+class ParentInfoFragment(val student: Student?) : Fragment() {
     private val list: ArrayList<ParentInfoModel> = arrayListOf()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +33,7 @@ class ParentInfoFragment(val student: StudentModel?) : Fragment() {
 
         student?.run {
             Picasso.get()
-                .load("${Const.ImageBaseUrl}/${parentAvatar}")
+                .load("${Const.ImageBaseUrl}/${studentPic}")
                 .into(iv_parent_pic, object : Callback {
                     override fun onSuccess() {}
                     override fun onError(e: Exception?) {
@@ -40,15 +41,15 @@ class ParentInfoFragment(val student: StudentModel?) : Fragment() {
                     }
                 })
 
-            tv_parent_name.text= "$fatherTitle $fatherName"
-            tv_sname.text= "$motherTitle $motherName"
+            tv_parent_name.text= "$fatherName"
+            tv_sname.text= " $motherName"
             list.run {
-                add(ParentInfoModel("Documents Number", parentDocId))
+                add(ParentInfoModel("Documents Number", parentDocNo))
                 add(ParentInfoModel("Mobile number", mobile ?: ""))
                 add(ParentInfoModel("email", email ?: ""))
                 add(ParentInfoModel("address", address ?: ""))
-                add(ParentInfoModel("Post Office", postOffice ?: ""))
-                add(ParentInfoModel("Dist", distc ?: ""))
+                add(ParentInfoModel("Post Office", pincode ?: ""))
+                add(ParentInfoModel("Dist", dist ?: ""))
                 add(ParentInfoModel("State", state ?: ""))
             }
         }

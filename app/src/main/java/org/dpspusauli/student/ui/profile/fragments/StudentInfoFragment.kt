@@ -13,10 +13,11 @@ import kotlinx.android.synthetic.main.adapter_profile_details.view.*
 import kotlinx.android.synthetic.main.fragment_student_info.*
 import org.dpspusauli.R
 import org.dpspusauli.network.Const
+import org.dpspusauli.student.model.Student
 import org.dpspusauli.student.model.StudentModel
 
 
-class StudentInfoFragment(var student: StudentModel?) : Fragment() {
+class StudentInfoFragment(var student: Student?) : Fragment() {
    private val list: ArrayList<StudentsInfoModel> = arrayListOf()
 
     override fun onCreateView(
@@ -33,7 +34,7 @@ class StudentInfoFragment(var student: StudentModel?) : Fragment() {
 
         student?.run {
             Picasso.get()
-                .load("${Const.ImageBaseUrl}/${studentAvatar}")
+                .load("${Const.ImageBaseUrl}/${studentPic}")
                 .into(iv_stu_pic, object : Callback {
                     override fun onSuccess() {}
                     override fun onError(e: Exception?) {
@@ -41,24 +42,24 @@ class StudentInfoFragment(var student: StudentModel?) : Fragment() {
                     }
                 })
 
-            tv_stu_name.text = "$fname $lname"
-            val rollMess: String = if (rollno == 0) {
+            tv_stu_name.text = "$firstName $lastName"
+            val rollMess: String = if (rollNo == 0) {
                 "Pending"
             }else{
-                ""+rollno
+                ""+rollNo
             }
-            tv_sname.text = "Class: ${classes.name ?: "---"},Roll No: $rollMess"
+            tv_sname.text = "Class: ${classes.className ?: "---"},Roll No: $rollMess"
 
             list.run {
-                add(StudentsInfoModel("Roll No", rollno.toString()))
-                add(StudentsInfoModel("Class", classes.name ?: "----"))
+                add(StudentsInfoModel("Roll No", rollNo.toString()))
+                add(StudentsInfoModel("Class", classes.className ?: "----"))
                 add(StudentsInfoModel("Gender", gender ?: ""))
                 add(StudentsInfoModel("Date of birth", dob ?: ""))
                 add(StudentsInfoModel("Mobile number", mobile ?: ""))
                 add(StudentsInfoModel("email", email ?: ""))
                 add(StudentsInfoModel("address", address ?: ""))
-                add(StudentsInfoModel("Post Office", postOffice ?: ""))
-                add(StudentsInfoModel("Dist", distc ?: ""))
+                add(StudentsInfoModel("Post Office", pincode ?: ""))
+                add(StudentsInfoModel("Dist", dist ?: ""))
                 add(StudentsInfoModel("State", state ?: ""))
             }
         }
